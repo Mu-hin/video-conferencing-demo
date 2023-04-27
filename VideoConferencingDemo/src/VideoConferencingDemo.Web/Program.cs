@@ -26,7 +26,6 @@ try
         .Enrich.FromLogContext()
         .ReadFrom.Configuration(builder.Configuration));
 
-
     //autofac
     builder.Host.UseServiceProviderFactory(new AutofacServiceProviderFactory());
     builder.Host.ConfigureContainer<ContainerBuilder>(containerBuilder =>
@@ -108,6 +107,10 @@ try
     app.UseRouting();
 
     app.UseAuthorization();
+
+    app.MapControllerRoute(
+        name: "areas",
+        pattern: "{area:exists}/{controller=Projects}/{action=Index}/{id?}");
 
     app.MapControllerRoute(
         name: "default",

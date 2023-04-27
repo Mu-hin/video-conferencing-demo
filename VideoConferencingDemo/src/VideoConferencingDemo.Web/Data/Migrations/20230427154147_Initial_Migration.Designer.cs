@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using VideoConferencingDemo.Infrastructure.DbContexts;
 
@@ -11,9 +12,11 @@ using VideoConferencingDemo.Infrastructure.DbContexts;
 namespace VideoConferencingDemo.Web.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230427154147_Initial_Migration")]
+    partial class Initial_Migration
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -145,25 +148,6 @@ namespace VideoConferencingDemo.Web.Data.Migrations
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
 
                     b.ToTable("AspNetUsers", (string)null);
-
-                    b.HasData(
-                        new
-                        {
-                            Id = new Guid("95e139bb-6751-4d4b-b14f-12e1597ef982"),
-                            AccessFailedCount = 0,
-                            ConcurrencyStamp = "e0072f2c-38e7-4da8-8f9f-9fdc1949fa69",
-                            Email = "Admin@gmail.com",
-                            EmailConfirmed = false,
-                            LockoutEnabled = false,
-                            Name = "Admin",
-                            NormalizedEmail = "ADMIN@GMAIL.COM",
-                            NormalizedUserName = "ADMIN@GMAIL.COM",
-                            PasswordHash = "AQAAAAIAAYagAAAAEFJIs3a7tSdJH9bPoQQgws9S9+h5KK10DZ4Adsyb/IfqBHAAPUidCvxtRsl6V5psxQ==",
-                            PhoneNumberConfirmed = false,
-                            SecurityStamp = "ELIU5QDSOYTRPKLL64KM2XUMVH2Z3BG2",
-                            TwoFactorEnabled = false,
-                            UserName = "Admin@gmail.com"
-                        });
                 });
 
             modelBuilder.Entity("VideoConferencingDemo.Infrastructure.Entities.Identity.ApplicationUserClaim", b =>
@@ -188,15 +172,6 @@ namespace VideoConferencingDemo.Web.Data.Migrations
                     b.HasIndex("UserId");
 
                     b.ToTable("AspNetUserClaims", (string)null);
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            ClaimType = "LinkManagement",
-                            ClaimValue = "true",
-                            UserId = new Guid("95e139bb-6751-4d4b-b14f-12e1597ef982")
-                        });
                 });
 
             modelBuilder.Entity("VideoConferencingDemo.Infrastructure.Entities.Identity.ApplicationUserLogin", b =>

@@ -4,7 +4,7 @@ using VideoConferencingDemo.Web.Models;
 using ApplicationUserBO = VideoConferencingDemo.Infrastructure.BusinessObjects.ApplicationUser;
 using ApplicationUserEO = VideoConferencingDemo.Infrastructure.Entities.Identity.ApplicationUser;
 
-namespace KeyGenerator.Web.Profiles
+namespace VideoConferencingDemo.Web.Profiles
 {
     public class WebProfile : Profile
     {

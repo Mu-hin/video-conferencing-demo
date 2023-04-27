@@ -1,4 +1,5 @@
 ﻿using Autofac;
+using VideoConferencingDemo.Infrastructure.Adapter;
 using VideoConferencingDemo.Infrastructure.DbContexts;
 
 namespace VideoConferencingDemo.Infrastructure
@@ -27,6 +28,8 @@ namespace VideoConferencingDemo.Infrastructure
                 .WithParameter("migrationAssemblyName", _migrationAssemblyName)
                 .InstancePerLifetimeScope();
 
+            builder.RegisterType<AdapterUserManager>().As<IUserManager>().InstancePerLifetimeScope();
+            builder.RegisterType<AdapterSignInManager>().As<ISignInManager>().InstancePerLifetimeScope();
 
             base.Load(builder);
         }

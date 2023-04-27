@@ -1,4 +1,5 @@
 ﻿using Autofac;
+using VideoConferencingDemo.Web.Models;
 
 namespace VideoConferencingDemo.Web
 {
@@ -6,9 +7,9 @@ namespace VideoConferencingDemo.Web
     {
         protected override void Load(ContainerBuilder builder)
         {
-            //builder.RegisterType<TestClass>().As<ITestClass>().InstancePerLifetimeScope();
+            builder.RegisterType<SignUpModel>().AsSelf();
+            builder.RegisterType<SignInModel>().AsSelf();
 
-            //builder.RegisterType<IndexModel>().AsSelf();
             base.Load(builder);
         }
     }
