@@ -49,23 +49,42 @@
         }
     </style>
 }
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <div id="menu">
-        <p>Your ID:</p>
-        <p id="uuid"></p>
-        <input type="text" placeholder="Peer id" />
-        <button onclick="callUser()">Connect</button>
-    </div>
+<div class="row">
+    <div class="col-md-6">
+        @*<div class="text-center">*@
+        <h1 class="display-3 mb-3">Free premium video meetings for everyone</h1>
+            
 
-    <div id="live">
-        <video id="remote-video"></video>
-        <video id="local-video" autoplay="true" muted="muted"></video>
-        <button id="end-call" onclick="endCall()">End Call</button>
+            <div id="menu">
+                <p>Your ID:</p>
+                <p id="uuid"></p>
+                <input type="text" placeholder="Peer id" />
+                <button onclick="callUser()">Connect</button>
+            </div>
+
+            <div id="live">
+                <video id="remote-video"></video>
+                <video id="local-video" autoplay="true" muted="muted"></video>
+                <button id="end-call" onclick="endCall()">End Call</button>
+            </div>
+            <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+     
+
+        <button type="button" class="btn btn-outline-primary mb-3">Create new meeting</button>
+
+        <form class="row g-3">
+            <div class="col-auto mb-3">
+                <input type="text" class="form-control" placeholder="Join a meeting">
+            </div>
+            <div class="col-auto">
+                <button type="submit" class="btn btn-primary mb-3">Join</button>
+            </div>
+        </form>
     </div>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+    <div class="col-md-6">
+        <img src="~/images/Online-meeting.jpg" class="img-fluid" alt="meeting-image">
+    </div>
 </div>
-
 @section Scripts
 {
     <script src="~/peerjs/peerjs-1.4.7.min.js"></script>

@@ -1,0 +1,40 @@
+.bg-signin {
+    background-image: linear-gradient( to right bottom, rgba(126, 213, 111, 0.8), rgba(40, 180, 131, 0.8) );
+}
+
+.forget-link {
+    text-decoration: none;
+}
+
+.primary-button {
+    background-color: #00c386;
+}
+
+.primary-button:hover {
+    background-color: #02ab75;
+}
+
+.secondary-button {
+    background-color: #7fa99d;
+    border: 0px solid;
+}
+
+.secondary-button:hover {
+    background-color: #71a999;
+    box-shadow: none;
+}
+
+.sign-up {
+    padding: 0 10px;
+    font-size: 14px;
+}
+
+.login-text {
+    font-size: 14px;
+    color: lightgrey;
+}
+
+.required:after {
+    content: " *";
+    color: red;
+}
