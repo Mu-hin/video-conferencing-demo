@@ -51,10 +51,7 @@
 }
 <div class="row">
     <div class="col-md-6">
-        @*<div class="text-center">*@
         <h1 class="display-3 mb-3">Free premium video meetings for everyone</h1>
-            
-
             <div id="menu">
                 <p>Your ID:</p>
                 <p id="uuid"></p>
@@ -84,6 +81,28 @@
     <div class="col-md-6">
         <img src="~/images/Online-meeting.jpg" class="img-fluid" alt="meeting-image">
     </div>
+
+
+    <div class="modal fade" id="exampleModalToggle" aria-hidden="true" aria-labelledby="exampleModalToggleLabel" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="exampleModalToggleLabel">Modal 1</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    Show a second modal and hide this one with the button below.
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-primary" data-bs-target="#exampleModalToggle2" data-bs-toggle="modal">Open second modal</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <button class="btn btn-primary" data-bs-target="#exampleModalToggle" data-bs-toggle="modal">Open first modal</button>
+
+    <button type="button" id="myButton" class="btn btn-primary">Primary</button>
 </div>
 @section Scripts
 {
@@ -170,5 +189,16 @@
             } catch { }
             currentCall = undefined;
         }
+
+        //----------------------------//
+        var myModal = new bootstrap.Modal(document.getElementById('exampleModalToggle'));
+        //var myModal = document.getElementById("exampleModalToggle");
+        var myButton = document.getElementById("myButton");
+
+        myButton.onclick = function () {
+            myModal.show();
+        }
+
+
     </script>
 }
