@@ -5,7 +5,9 @@ VisualStudioVersion = 17.5.33424.131
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{0601BB17-6FF3-4813-B942-89371F4DA240}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VideoConferencingDemo.Web", "src\VideoConferencingDemo.Web\VideoConferencingDemo.Web.csproj", "{A745BFFD-CF56-40A4-96ED-C964AF819A19}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "VideoConferencingDemo.Web", "src\VideoConferencingDemo.Web\VideoConferencingDemo.Web.csproj", "{A745BFFD-CF56-40A4-96ED-C964AF819A19}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VideoConferencingDemo.Infrastructure", "VideoConferencingDemo.Infrastructure\VideoConferencingDemo.Infrastructure.csproj", "{18BDCF31-0100-4B47-841B-79C09B38EEFC}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -17,12 +19,17 @@ Global
 		{A745BFFD-CF56-40A4-96ED-C964AF819A19}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A745BFFD-CF56-40A4-96ED-C964AF819A19}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A745BFFD-CF56-40A4-96ED-C964AF819A19}.Release|Any CPU.Build.0 = Release|Any CPU
+		{18BDCF31-0100-4B47-841B-79C09B38EEFC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{18BDCF31-0100-4B47-841B-79C09B38EEFC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{18BDCF31-0100-4B47-841B-79C09B38EEFC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{18BDCF31-0100-4B47-841B-79C09B38EEFC}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{A745BFFD-CF56-40A4-96ED-C964AF819A19} = {0601BB17-6FF3-4813-B942-89371F4DA240}
+		{18BDCF31-0100-4B47-841B-79C09B38EEFC} = {0601BB17-6FF3-4813-B942-89371F4DA240}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {E31C9336-A32A-47E2-94DE-16DE0F5098A8}
