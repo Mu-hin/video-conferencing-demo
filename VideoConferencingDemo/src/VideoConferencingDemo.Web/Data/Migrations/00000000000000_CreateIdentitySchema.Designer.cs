@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using System;
+using VideoConferencingDemo.Infrastructure.DbContexts;
 using VideoConferencingDemo.Web.Data;
 
 namespace VideoConferencingDemo.Web.Data.Migrations
