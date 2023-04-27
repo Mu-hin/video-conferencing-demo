@@ -1,4 +1,4 @@
-﻿using KeyGenerator.Infrastructure.BusinessObjects;
+﻿using VideoConferencingDemo.Infrastructure.BusinessObjects;
 using Microsoft.AspNetCore.Identity;
 using System.Security.Claims;
 

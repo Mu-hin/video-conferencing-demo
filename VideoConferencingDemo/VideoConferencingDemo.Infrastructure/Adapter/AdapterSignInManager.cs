@@ -1,10 +1,10 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Identity;
 using System.Security.Claims;
-using ApplicationUserBO = KeyGenerator.Infrastructure.BusinessObjects.ApplicationUser;
-using ApplicationUserEO = KeyGenerator.Infrastructure.Entities.Identity.ApplicationUser;
-using SignInBO = KeyGenerator.Infrastructure.BusinessObjects.SignIn;
-using SignInEO = KeyGenerator.Infrastructure.Entities.SignIn;
+using ApplicationUserBO = VideoConferencingDemo.Infrastructure.BusinessObjects.ApplicationUser;
+using ApplicationUserEO = VideoConferencingDemo.Infrastructure.Entities.Identity.ApplicationUser;
+using SignInBO = VideoConferencingDemo.Infrastructure.BusinessObjects.SignIn;
+using SignInEO = VideoConferencingDemo.Infrastructure.Entities.SignIn;
 
 namespace VideoConferencingDemo.Infrastructure.Adapter
 {

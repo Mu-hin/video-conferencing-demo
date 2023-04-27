@@ -1,8 +1,6 @@
-﻿using KeyGenerator.Infrastructure.Entities;
-using KeyGenerator.Infrastructure.Entities.Identity;
-using KeyGenerator.Infrastructure.Seeds;
-using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using VideoConferencingDemo.Infrastructure.Entities.Identity;
 
 namespace VideoConferencingDemo.Infrastructure.DbContexts
 {

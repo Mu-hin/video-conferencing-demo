@@ -1,5 +1,4 @@
-﻿using KeyGenerator.Infrastructure.Entities;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 
 namespace VideoConferencingDemo.Infrastructure.DbContexts
 {

@@ -1,11 +1,11 @@
 ﻿using AutoMapper;
-using KeyGenerator.Infrastructure.Exceptions;
+using VideoConferencingDemo.Infrastructure.Exceptions;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.WebUtilities;
 using System.Security.Claims;
 using System.Text;
-using ApplicationUserBO = KeyGenerator.Infrastructure.BusinessObjects.ApplicationUser;
-using ApplicationUserEO = KeyGenerator.Infrastructure.Entities.Identity.ApplicationUser;
+using ApplicationUserBO = VideoConferencingDemo.Infrastructure.BusinessObjects.ApplicationUser;
+using ApplicationUserEO = VideoConferencingDemo.Infrastructure.Entities.Identity.ApplicationUser;
 
 namespace VideoConferencingDemo.Infrastructure.Adapter
 {

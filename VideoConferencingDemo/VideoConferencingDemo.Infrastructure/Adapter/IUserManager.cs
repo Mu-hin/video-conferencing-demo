@@ -1,6 +1,6 @@
-﻿using KeyGenerator.Infrastructure.BusinessObjects;
-using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Identity;
 using System.Security.Claims;
+using VideoConferencingDemo.Infrastructure.BusinessObjects;
 
 namespace VideoConferencingDemo.Infrastructure.Adapter
 {
