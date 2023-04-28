@@ -1,16 +1,14 @@
 ﻿using Autofac;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Collections.Generic;
 using System.Diagnostics;
-using System.Net;
-using System.Security.Policy;
 using System.Text.Encodings.Web;
 using VideoConferencingDemo.Infrastructure.Exceptions;
 using VideoConferencingDemo.Web.Models;
 
 namespace VideoConferencingDemo.Web.Controllers
 {
+    [Authorize]
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
@@ -22,6 +20,7 @@ namespace VideoConferencingDemo.Web.Controllers
             _scope = scope;
         }
 
+        [AllowAnonymous]
         public IActionResult Index()
         {
             var model = new HomePageModel();
@@ -48,14 +47,32 @@ namespace VideoConferencingDemo.Web.Controllers
             }
             catch(MaxLimitException ex)
             {
-                _logger.LogInformation("An user tried to generate meeting link more than max limit", DateTime.UtcNow);
+                _logger.LogInformation("An user tried to generate meeting link more than max limit");
                 //return HttpStatusCode.MethodNotAllowed.ToString();
-                return "You had reached the max limit of link generation";
+                return ex.Message;
             }
             
         }
 
-        public IActionResult StartMeeting(Guid id)
+        public async Task<IActionResult> StartMeeting(Guid id)
+        {
+            var model = new StartMeetingModel();
+
+            try
+            {
+                model.ResolveDependency(_scope);
+                await model.CheckLinkOwner(id, User);
+            }
+            catch(InvalidLinkException ex)
+            {
+                _logger.LogInformation(ex.Message);
+                return RedirectToAction(nameof(InvalidLink));
+            }
+
+            return View(model);
+        }
+
+        public IActionResult InvalidLink()
         {
             return View();
         }

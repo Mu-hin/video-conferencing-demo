@@ -169,3 +169,7 @@ Microsoft.Extensions.Hosting.HostAbortedException: The host was aborted.
    at Microsoft.Extensions.Hosting.HostApplicationBuilder.Build()
    at Microsoft.AspNetCore.Builder.WebApplicationBuilder.Build()
    at Program.<Main>$(String[] args) in C:\Users\Muhin\Desktop\Recruitment task\Task\video-conferencing-demo\VideoConferencingDemo\src\VideoConferencingDemo.Web\Program.cs:line 89
+2023-04-28 18:19:45.971 +06:00 [INF] Application Starting up
+2023-04-28 18:21:01.165 +06:00 [INF] Application Starting up
+2023-04-28 18:24:33.989 +06:00 [INF] Application Starting up
+2023-04-28 18:25:24.875 +06:00 [INF] An user tried to generate meeting link more than max limit

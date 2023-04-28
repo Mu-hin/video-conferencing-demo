@@ -25,7 +25,7 @@ public class MeetingLinksService : IMeetingLinksService
         var currentUser = await _userManager.GetUserAsync(claimsPrincipal);
         var meetingLink = new MeetingLink();
 
-        if (currentUser.TotalGeneratedLinq == null || currentUser.TotalGeneratedLinq < 20)
+        if (currentUser.TotalGeneratedLinq < 20)
         {
             meetingLink.MeetingId = Guid.NewGuid();
             meetingLink.UserEmail = currentUser.Email!;
@@ -41,5 +41,25 @@ public class MeetingLinksService : IMeetingLinksService
 
         await _userManager.UpdateTotalLinkInfo(claimsPrincipal);
         return meetingLink.MeetingId;
+    }
+
+    public async Task<bool> CheckLinkOwner(Guid meetingId, ClaimsPrincipal claimsPrincipal)
+    {
+        var currentUser = await _userManager.GetUserAsync(claimsPrincipal);
+        var meetingLinkInfo = _applicationUnitOfWork.MeetingLinks.Get(x => x.MeetingId == meetingId, "").FirstOrDefault();
+
+        if(meetingLinkInfo != null)
+        {
+            if (currentUser.Email == meetingLinkInfo.UserEmail)
+            {
+                return true;
+            }
+                
+            return false;
+        }
+        else
+        {
+            throw new InvalidLinkException("An user tried to connect with invalid meeting link");
+        }
     }
 }

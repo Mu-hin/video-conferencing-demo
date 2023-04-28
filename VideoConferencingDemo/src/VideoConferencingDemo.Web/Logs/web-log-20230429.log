@@ -1,0 +1,26 @@
+2023-04-29 02:00:56.600 +06:00 [INF] Application Starting up
+2023-04-29 03:13:42.302 +06:00 [INF] Application Starting up
+2023-04-29 03:16:47.472 +06:00 [INF] Application Starting up
+2023-04-29 03:16:52.341 +06:00 [INF] An user tried to connect with invalid meeting link
+2023-04-29 03:17:00.285 +06:00 [INF] An user tried to connect with invalid meeting link
+2023-04-29 03:20:15.947 +06:00 [INF] Application Starting up
+2023-04-29 03:20:31.838 +06:00 [INF] An user tried to connect with invalid meeting link
+2023-04-29 03:27:51.687 +06:00 [ERR] An unhandled exception has occurred while executing the request.
+2023-04-29 03:27:51.737 +06:00 [ERR] An exception was thrown attempting to display the error page.
+System.TypeLoadException: Could not load type 'AspNetCoreGeneratedDocument.Views_Home_StartMeeting+<ExecuteAsync>d__0#1' from assembly 'VideoConferencingDemo.Web, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null'.
+   at System.Reflection.CustomAttribute._CreateCaObject(RuntimeModule pModule, RuntimeType type, IRuntimeMethodInfo pCtor, Byte** ppBlob, Byte* pEndBlob, Int32* pcNamedArgs)
+   at System.Reflection.CustomAttribute.AddCustomAttributes(ListBuilder`1& attributes, RuntimeModule decoratedModule, Int32 decoratedMetadataToken, RuntimeType attributeFilterType, Boolean mustBeInheritable, ListBuilder`1 derivedAttributes)
+   at System.Reflection.CustomAttribute.GetCustomAttributes(RuntimeMethodInfo method, RuntimeType caType, Boolean inherit)
+   at System.Attribute.GetCustomAttributes(MemberInfo element, Type attributeType, Boolean inherit)
+   at System.Reflection.CustomAttributeExtensions.GetCustomAttributes[T](MemberInfo element)
+   at Microsoft.Extensions.StackTrace.Sources.StackTraceHelper.TryResolveStateMachineMethod(MethodBase& method, Type& declaringType)
+   at Microsoft.Extensions.StackTrace.Sources.StackTraceHelper.GetMethodDisplayString(MethodBase method)
+   at Microsoft.Extensions.StackTrace.Sources.StackTraceHelper.GetFrames(Exception exception, AggregateException& error)
+   at Microsoft.Extensions.StackTrace.Sources.ExceptionDetailsProvider.GetStackFrames(Exception original)
+   at Microsoft.Extensions.StackTrace.Sources.ExceptionDetailsProvider.GetDetails(Exception exception)+MoveNext()
+   at Microsoft.AspNetCore.Diagnostics.RazorViews.ErrorPage.ExecuteAsync()
+   at Microsoft.Extensions.RazorViews.BaseView.ExecuteAsync(HttpContext context)
+   at Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore.DatabaseDeveloperPageExceptionFilter.HandleExceptionAsync(ErrorContext errorContext, Func`2 next)
+   at Microsoft.AspNetCore.Diagnostics.DeveloperExceptionPageMiddlewareImpl.Invoke(HttpContext context)
+2023-04-29 03:28:51.475 +06:00 [INF] Application Starting up
+2023-04-29 03:31:54.226 +06:00 [INF] Application Starting up

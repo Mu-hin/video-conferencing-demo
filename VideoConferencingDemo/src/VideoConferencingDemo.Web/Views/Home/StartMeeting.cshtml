@@ -1,7 +1,37 @@
-﻿
+﻿@model StartMeetingModel
 @{
     ViewData["Title"] = "StartMeeting";
 }
 
-<h1>StartMeeting</h1>
+@section Styles
+{
+    <style>
+        .vertical-center {
+            margin: 0 50%;
+            width: 15rem;
+        }
+    </style>
+}
+
+<div class="row justify-content-center">
+    <div class="card" style="height: 18rem;width: 36rem;">
+        <div class="card-body">
+            <h5 class="card-title">Card title</h5>
+            <h6 class="card-subtitle mb-2 text-body-secondary">Card subtitle</h6>
+            <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+            <a href="#" class="card-link">Card link</a>
+            <a href="#" class="card-link">Another link</a>
+        </div>
+    </div>
+    @if (Model.IsLinkOwner)
+    {
+        <button type="button" id="joinButton" class="btn btn-outline-primary mt-3 vertical-center">Join</button>
+    }
+    else
+    {
+        <button type="button" id="joinButton" class="btn btn-outline-primary mt-3 vertical-center">Ask to join</button>
+    }
+</div>
+
+
 
