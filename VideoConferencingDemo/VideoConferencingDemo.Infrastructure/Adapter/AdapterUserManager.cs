@@ -107,6 +107,14 @@ namespace VideoConferencingDemo.Infrastructure.Adapter
             return userBO;
         }
 
+        public async Task UpdateTotalLinkInfo(ClaimsPrincipal claimsPrincipal)
+        {
+            var userEO = await GetUserByClaimPrincipalAsync(claimsPrincipal);
+            userEO.TotalGeneratedLinq += 1;
+
+            await _userManager.UpdateAsync(userEO);
+        }
+
         public async Task<IdentityResult> ChangePasswordAsync(ClaimsPrincipal claimsPrincipal,
             string oldPassword, string newPassword)
         {

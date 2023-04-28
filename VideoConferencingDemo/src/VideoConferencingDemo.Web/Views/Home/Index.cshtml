@@ -211,6 +211,7 @@
         //xhr.send();
 
         myButton.onclick = function () {
+            const xhr = new XMLHttpRequest();
             let signedIn = '@Model.IsSignedIn(User)';
 
             if (signedIn === 'False') {
@@ -223,9 +224,12 @@
                 xhr.onload = function () {
                     if (xhr.status === 200) {
                         //const data = JSON.parse(xhr.responseText);
-                        modalText.textContent = JSON.parse(xhr.responseText);
+                        modalText.textContent = xhr.responseText;
+                        console.log(xhr.responseText);
                         //badge.innerText = data;
                     } else {
+                        //modalText.textContent = JSON.parse(xhr.responseText);
+                        console.log(xhr.responseText);
                         console.log('Request failed. Status code:', xhr.status);
                     }
                 };

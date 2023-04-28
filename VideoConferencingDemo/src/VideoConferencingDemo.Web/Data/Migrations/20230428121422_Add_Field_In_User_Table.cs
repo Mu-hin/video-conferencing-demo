@@ -15,14 +15,15 @@ namespace VideoConferencingDemo.Web.Data.Migrations
                 name: "TotalGeneratedLinq",
                 table: "AspNetUsers",
                 type: "int",
-                nullable: true);
+                nullable: false,
+                defaultValue: 0);
 
             migrationBuilder.UpdateData(
                 table: "AspNetUsers",
                 keyColumn: "Id",
                 keyValue: new Guid("95e139bb-6751-4d4b-b14f-12e1597ef982"),
                 column: "TotalGeneratedLinq",
-                value: null);
+                value: 0);
         }
 
         /// <inheritdoc />

@@ -6,6 +6,6 @@ namespace VideoConferencingDemo.Infrastructure.BusinessObjects
     {
         public string Name { get; set; }
         public string? Image { get; set; }
-        public int? TotalGeneratedLinq { get; set; }
+        public int TotalGeneratedLinq { get; set; } = 0;
     }
 }

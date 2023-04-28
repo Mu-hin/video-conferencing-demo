@@ -12,8 +12,8 @@ using VideoConferencingDemo.Infrastructure.DbContexts;
 namespace VideoConferencingDemo.Web.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20230428090402_Add_Field_In_User_Table")]
-    partial class Add_Field_In_User_Table
+    [Migration("20230428121732_Add_Meeting_Links_Table")]
+    partial class Add_Meeting_Links_Table
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -130,7 +130,7 @@ namespace VideoConferencingDemo.Web.Data.Migrations
                     b.Property<string>("SecurityStamp")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("TotalGeneratedLinq")
+                    b.Property<int>("TotalGeneratedLinq")
                         .HasColumnType("int");
 
                     b.Property<bool>("TwoFactorEnabled")
@@ -167,6 +167,7 @@ namespace VideoConferencingDemo.Web.Data.Migrations
                             PasswordHash = "AQAAAAIAAYagAAAAEFJIs3a7tSdJH9bPoQQgws9S9+h5KK10DZ4Adsyb/IfqBHAAPUidCvxtRsl6V5psxQ==",
                             PhoneNumberConfirmed = false,
                             SecurityStamp = "ELIU5QDSOYTRPKLL64KM2XUMVH2Z3BG2",
+                            TotalGeneratedLinq = 0,
                             TwoFactorEnabled = false,
                             UserName = "Admin@gmail.com"
                         });
@@ -258,6 +259,27 @@ namespace VideoConferencingDemo.Web.Data.Migrations
                     b.HasKey("UserId", "LoginProvider", "Name");
 
                     b.ToTable("AspNetUserTokens", (string)null);
+                });
+
+            modelBuilder.Entity("VideoConferencingDemo.Infrastructure.Entities.MeetingLink", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("LastUsed")
+                        .HasColumnType("datetime2");
+
+                    b.Property<Guid>("MeetingId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("UserEmail")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("MeetingLinks");
                 });
 
             modelBuilder.Entity("VideoConferencingDemo.Infrastructure.Entities.Identity.ApplicationRoleClaim", b =>
