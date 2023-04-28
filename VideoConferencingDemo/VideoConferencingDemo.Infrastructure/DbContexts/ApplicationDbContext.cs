@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using VideoConferencingDemo.Infrastructure.Entities;
 using VideoConferencingDemo.Infrastructure.Entities.Identity;
 using VideoConferencingDemo.Infrastructure.Seeds;
 
@@ -74,7 +75,7 @@ namespace VideoConferencingDemo.Infrastructure.DbContexts
             base.OnModelCreating(modelBuilder);
         }
 
-        //public DbSet<SerialKey> KeyInformations { get; set; }
+        public DbSet<MeetingLink> MeetingLinks { get; set; }
         //public DbSet<KeyRequest> KeyRequests { get; set; }
     }
 }

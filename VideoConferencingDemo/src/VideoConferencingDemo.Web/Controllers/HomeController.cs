@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Autofac;
+using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 using VideoConferencingDemo.Web.Models;
 
@@ -7,15 +8,30 @@ namespace VideoConferencingDemo.Web.Controllers
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
+        private readonly ILifetimeScope _scope;
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(ILogger<HomeController> logger, ILifetimeScope scope)
         {
             _logger = logger;
+            _scope = scope;
         }
 
         public IActionResult Index()
         {
-            return View();
+            var model = new HomePageModel();
+            model.ResolveDependency(_scope);
+            model.IsSignedIn(User);
+
+            return View(model);
+        }
+
+        public IActionResult GetNewMeetingLink()
+        {
+            var model = new HomePageModel();
+            model.ResolveDependency(_scope);
+            model.IsSignedIn(User);
+
+            return View(model);
         }
 
         public IActionResult Privacy()

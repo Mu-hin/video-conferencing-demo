@@ -1,6 +1,9 @@
 ﻿using Autofac;
 using VideoConferencingDemo.Infrastructure.Adapter;
 using VideoConferencingDemo.Infrastructure.DbContexts;
+using VideoConferencingDemo.Infrastructure.Repositories;
+using VideoConferencingDemo.Infrastructure.Services;
+using VideoConferencingDemo.Infrastructure.UnitOfWorks;
 
 namespace VideoConferencingDemo.Infrastructure
 {
@@ -30,6 +33,10 @@ namespace VideoConferencingDemo.Infrastructure
 
             builder.RegisterType<AdapterUserManager>().As<IUserManager>().InstancePerLifetimeScope();
             builder.RegisterType<AdapterSignInManager>().As<ISignInManager>().InstancePerLifetimeScope();
+            builder.RegisterType<ApplicationUnitOfWork>().As<IApplicationUnitOfWork>().InstancePerLifetimeScope();
+            builder.RegisterType<MeetingLinkRepository>().As<IMeetingLinkRepository>().InstancePerLifetimeScope();
+            builder.RegisterType<MeetingLinksService>().As<IMeetingLinksService>().InstancePerLifetimeScope();
+            builder.RegisterType<TimeService>().As<ITimeService>().InstancePerLifetimeScope();
 
             base.Load(builder);
         }

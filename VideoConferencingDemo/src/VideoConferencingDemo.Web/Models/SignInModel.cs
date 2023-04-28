@@ -66,5 +66,10 @@ namespace VideoConferencingDemo.Web.Models
         {
             await _signInManager.RefreshSignInAsync(claimsPrincipal);
         }
+
+        public bool IsSignedIn(ClaimsPrincipal claimsPrincipal)
+        {
+            return _signInManager.IsSignedIn(claimsPrincipal);
+        }
     }
 }
