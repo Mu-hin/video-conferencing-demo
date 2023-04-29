@@ -52,6 +52,9 @@ public class MeetingLinksService : IMeetingLinksService
         {
             if (currentUser.Email == meetingLinkInfo.UserEmail)
             {
+                meetingLinkInfo.LastUsed = DateTime.UtcNow;
+                await _applicationUnitOfWork.SaveAsync();
+
                 return true;
             }
                 

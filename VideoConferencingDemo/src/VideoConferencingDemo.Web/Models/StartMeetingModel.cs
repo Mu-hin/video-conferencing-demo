@@ -10,6 +10,7 @@ namespace VideoConferencingDemo.Web.Models
     {
         private IMeetingLinksService _meetingLinksService;
         public bool IsLinkOwner { get; set; }
+        public Guid MeetingId { get; set; }
 
         public StartMeetingModel() : base()
         {

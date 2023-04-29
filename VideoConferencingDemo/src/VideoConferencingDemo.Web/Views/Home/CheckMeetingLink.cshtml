@@ -9,49 +9,39 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
     <style>
+        .vertical-center {
+            margin: 0 50%;
+            width: 15rem;
+        }
+
         .align-footer {
             position: absolute;
             bottom: 0;
             margin: 0 auto;
         }
 
-        .align-icon{
-            position: absolute;
-            bottom: 73px;
-            left: 156px
-        }
-
         a {
             text-decoration: none;
-        }
-
-        #local-video {
-            height: 12rem;
-            width: 16rem;
-            background: #3e3e3e;
-            bottom: 77px;
-            left: 107px;
-            position: absolute;
         }
     </style>
 }
 
 <div class="row justify-content-center">
-    <div id="live">
-        <video id="remote-video"></video>
-        <video id="local-video" autoplay="true" muted="muted"></video>
-        <button id="end-call" onclick="endCall()">End Call</button>
-    </div>
-
-    <video id="remote-video" class="card" style="height: 35rem;width: 72rem;background: black;"></video>
-    <div class="align-footer">
-        <video id="local-video" autoplay playsinline style="height: 12rem;width: 16rem;background: #3e3e3e;"></video>
-                
-        <div class="align-icon">
+    <div class="card" style="height: 22rem;width: 36rem;background: black;">
+        <video autoplay playsinline style="height: 18rem;width: 35rem;background: black;"></video>
+        <div class="align-footer">
             <a href="#"><i class="camera fa-solid fa-video-slash fa-xl m-3"></i></a>
             <a href="#"><i class="microphone fa-solid fa-microphone-slash fa-xl"></i></a>
         </div>
     </div>
+    @if (Model.IsLinkOwner)
+    {
+        <button type="button" id="joinButton" class="btn btn-outline-primary mt-3 vertical-center">Join</button>
+    }
+    else
+    {
+        <button type="button" id="askTojoinButton" class="btn btn-outline-primary mt-3 vertical-center">Ask to join</button>
+    }
 </div>
 
 @section Scripts{
@@ -127,7 +117,44 @@
         function InitializesMediaStream(){
             navigator.mediaDevices.getUserMedia(mediaStreamConstraints)
                 .then(gotLocalMediaStream).catch(handleLocalMediaStreamError);
-        } 
+        }
+
+        let askToJoinButton = document.querySelector('#askTojoinButton');
+        let joinButton = document.querySelector('#joinButton');
+
+        console.log(askToJoinButton);
+        console.log(joinButton);
+
+        const xhr = new XMLHttpRequest();
+        const url = "/Home/StartMeeting";
+        const data = `id='@Model.MeetingId'&microphone=${enableMicrophone}&camera=${enableCamera}`;
+
+        //askToJoinButton.addEventListener('click', function (event) {
+        //    const data = `id='@Model.MeetingId'&microphone=${enableMicrophone}&camera=${enableCamera}`;
+        //    console.log(data);
+        //    xhr.open("POST", url);
+        //    xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+        //    xhr.onreadystatechange = function () {
+        //        if (xhr.readyState === 4 && xhr.status === 200) {
+        //            console.log(xhr.responseText);
+        //        }
+        //    };
+        //    xhr.send(data);
+        //});
+
+        joinButton.addEventListener('click', function (event) {
+            const data = `id=@Model.MeetingId&microphone=${enableMicrophone}&camera=${enableCamera}`;
+            console.log(data);
+            xhr.open("POST", url);
+            xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState === 4 && xhr.status === 200) {
+                    console.log(xhr.responseText);
+                }
+            };
+            xhr.send(data);
+        });
+
     </script>
 }
 

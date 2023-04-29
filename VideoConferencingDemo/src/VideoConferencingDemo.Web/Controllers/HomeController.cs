@@ -39,7 +39,7 @@ namespace VideoConferencingDemo.Web.Controllers
                 var meetingId = await model.StoreNewMeetingInformationAsync(User);
 
 
-                var url = Url.Action(nameof(StartMeeting), "Home",
+                var url = Url.Action(nameof(CheckMeetingLink), "Home",
                             values: new { id = meetingId },
                             protocol: Request.Scheme)!;
 
@@ -54,9 +54,10 @@ namespace VideoConferencingDemo.Web.Controllers
             
         }
 
-        public async Task<IActionResult> StartMeeting(Guid id)
+        public async Task<IActionResult> CheckMeetingLink(Guid id)
         {
             var model = new StartMeetingModel();
+            model.MeetingId = id;
 
             try
             {
@@ -73,6 +74,12 @@ namespace VideoConferencingDemo.Web.Controllers
         }
 
         public IActionResult InvalidLink()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult StartMeeting(Guid id, bool microphone, bool camera)
         {
             return View();
         }
