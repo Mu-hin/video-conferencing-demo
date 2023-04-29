@@ -23,7 +23,6 @@ namespace VideoConferencingDemo.Web.Models
             _meetingLinksService = meetingLinksService;
         }
 
-
         public override void ResolveDependency(ILifetimeScope scope)
         {
             base.ResolveDependency(scope);

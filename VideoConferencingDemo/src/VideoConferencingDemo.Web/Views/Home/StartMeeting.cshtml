@@ -4,23 +4,34 @@
 }
 
 @section Styles
-{
+    {
+    @*<link rel="stylesheet" href="~/font-awesome/font-awesome-6.4.0.min.css"/>*@
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
     <style>
         .vertical-center {
             margin: 0 50%;
             width: 15rem;
         }
+
+        .align-footer {
+            position: absolute;
+            bottom: 0;
+            margin: 0 auto;
+        }
+
+        a {
+            text-decoration: none;
+        }
     </style>
 }
 
 <div class="row justify-content-center">
-    <div class="card" style="height: 18rem;width: 36rem;">
-        <div class="card-body">
-            <h5 class="card-title">Card title</h5>
-            <h6 class="card-subtitle mb-2 text-body-secondary">Card subtitle</h6>
-            <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-            <a href="#" class="card-link">Card link</a>
-            <a href="#" class="card-link">Another link</a>
+    <div class="card" style="height: 22rem;width: 36rem;background: black;">
+        <video autoplay playsinline style="height: 18rem;width: 35rem;background: black;"></video>
+        <div class="align-footer">
+            <a href="#"><i class="camera fa-solid fa-video-slash fa-xl m-3"></i></a>
+            <a href="#"><i class="microphone fa-solid fa-microphone-slash fa-xl"></i></a>
         </div>
     </div>
     @if (Model.IsLinkOwner)
@@ -32,6 +43,83 @@
         <button type="button" id="joinButton" class="btn btn-outline-primary mt-3 vertical-center">Ask to join</button>
     }
 </div>
+
+@section Scripts{
+    <script>
+        'use strict';
+        let enableMicrophone = false;
+        let enableCamera = false;
+        let microphone = document.querySelector('.microphone');
+        let camera = document.querySelector('.camera');
+
+        microphone.addEventListener('click', function (event) {
+            if (enableMicrophone === false) {
+                enableMicrophone = true;
+                microphone.classList.remove('fa-microphone-slash');
+                microphone.classList.add('fa-microphone');
+            }
+            else{
+                enableMicrophone = false;
+                microphone.classList.remove('fa-microphone');
+                microphone.classList.add('fa-microphone-slash');
+            }
+            InitializesMediaStream();
+        });
+
+        camera.addEventListener('click', function (event) {
+            if (enableCamera === false) {
+                enableCamera = true;
+                camera.classList.remove('fa-video-slash');
+                camera.classList.add('fa-video');
+            }
+            else {
+                enableCamera = false;
+                camera.classList.remove('fa-video');
+                camera.classList.add('fa-video-slash');
+            }
+            InitializesMediaStream();
+        });
+
+        // On this codelab, you will be streaming only video (video: true).
+        const mediaStreamConstraints = {
+            video: true,
+            audio: true,
+        };
+
+        // Video element where stream will be placed.
+        const localVideo = document.querySelector('video');
+
+        // Local stream that will be reproduced on the video.
+        let localStream;
+
+        // Handles success by adding the MediaStream to the video element.
+        function gotLocalMediaStream(mediaStream) {
+            localStream = mediaStream;
+            localVideo.srcObject = mediaStream;
+            muteCamera();
+            muteMicrophone();
+        }
+
+        // Handles error by logging a message to the console with the error message.
+        function handleLocalMediaStreamError(error) {
+            console.log('navigator.getUserMedia error: ', error);
+        }
+
+        function muteMicrophone() {
+            localStream.getAudioTracks().forEach(track => track.enabled = enableMicrophone);
+        }
+
+        function muteCamera() {
+            localStream.getVideoTracks().forEach(track => track.enabled = enableCamera);
+        }
+
+        // Initializes media stream.
+        function InitializesMediaStream(){
+            navigator.mediaDevices.getUserMedia(mediaStreamConstraints)
+                .then(gotLocalMediaStream).catch(handleLocalMediaStreamError);
+        } 
+    </script>
+}
 
 
 
