@@ -54,67 +54,54 @@
 <div class="row">
     <div class="col-md-6">
         <h1 class="display-3 mb-3">Free premium video meetings for everyone</h1>
-            <div id="menu">
-                <p>Your ID:</p>
-                <p id="uuid"></p>
-                <input type="text" placeholder="Peer id" />
-                <button onclick="callUser()">Connect</button>
-            </div>
+        <div id="menu">
+            <p>Your ID:</p>
+            <p id="uuid"></p>
+            <input type="text" placeholder="Peer id" />
+            <button onclick="callUser()">Connect</button>
+        </div>
 
-            <div id="live">
-                <video id="remote-video"></video>
-                <video id="local-video" autoplay="true" muted="muted"></video>
-                <button id="end-call" onclick="endCall()">End Call</button>
-            </div>
-            <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
-     
+        <div id="live">
+            <video id="remote-video"></video>
+            <video id="local-video" autoplay="true" muted="muted"></video>
+            <button id="end-call" onclick="endCall()">End Call</button>
+        </div>     
 
-        <button type="button" id="createMeeting" class="btn btn-outline-primary mb-3">Create new meeting</button>
+        <button type="button" id="createMeeting" class="btn btn-outline-primary my-3">Create new meeting</button>
 
-        <form class="row g-3">
+        <div class="row g-3">
             <div class="col-auto mb-3">
-                <input type="text" class="form-control" placeholder="Join a meeting">
+                <input type="text" id="joinLink" class="form-control" placeholder="Join a meeting">
             </div>
             <div class="col-auto">
-                <button type="submit" class="btn btn-primary mb-3">Join</button>
+                <button id="joinButton" class="btn btn-primary mb-3">Join</button>
             </div>
-        </form>
+        </div>
     </div>
+
     <div class="col-md-6">
         <img src="~/images/Online-meeting.jpg" class="img-fluid" alt="meeting-image">
     </div>
-
 
     <div class="modal fade" id="exampleModalToggle" aria-hidden="true" aria-labelledby="exampleModalToggleLabel" tabindex="-1">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h1 class="modal-title fs-5" id="exampleModalToggleLabel">Modal 1</h1>
+                    <h1 class="modal-title fs-5" id="exampleModalToggleLabel">Your Link</h1>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    Show a second modal and hide this one with the button below.
-                </div>
-                <div class="modal-footer">
-                    <button class="btn btn-primary" data-bs-target="#exampleModalToggle2" data-bs-toggle="modal">Open second modal</button>
+                    Link info
                 </div>
             </div>
         </div>
     </div>
-
-    <button class="btn btn-primary" data-bs-target="#exampleModalToggle" data-bs-toggle="modal">Open first modal</button>
-
-    <button type="button" id="myButton" class="btn btn-primary">Primary</button>
-
 </div>
 @section Scripts
 {
     <script src="~/peerjs/peerjs-1.4.7.min.js"></script>
     <script>
-        //const peer = new Peer({
-        //    debug: 3
-        //});
-
+        
         const peer = new Peer({
             debug: 3,
             config: {
@@ -213,23 +200,22 @@
 
         //----------------------------//
         var myModal = new bootstrap.Modal(document.getElementById('exampleModalToggle'));
-        var myButton = document.getElementById("myButton");
+        //var myButton = document.getElementById("myButton");
         let modalText = document.querySelector(".modal-body");
         let createMeetingButton = document.getElementById("createMeeting");
+        let joinButton = document.getElementById("joinButton");
+        
 
-        //const xhr = new XMLHttpRequest();
-        //xhr.open('GET', '/Admin/Dashboard/GetNotificaionCount');
-        //xhr.onload = function () {
-        //    if (xhr.status === 200) {
-        //        const data = JSON.parse(xhr.responseText);
-        //        badge.innerText = data;
-        //    } else {
-        //        console.log('Request failed. Status code:', xhr.status);
-        //    }
-        //};
-        //xhr.send();
 
-        myButton.onclick = function () {
+
+        //window.location.href = "http://www.w3schools.com";
+
+        joinButton.onclick = function () {
+            let joinLink = document.getElementById("joinLink").value;
+            window.location.href = joinLink;
+        };
+
+        createMeetingButton.onclick = function () {
             const xhr = new XMLHttpRequest();
             let signedIn = '@Model.IsSignedIn(User)';
 
