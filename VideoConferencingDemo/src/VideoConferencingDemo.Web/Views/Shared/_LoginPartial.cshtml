@@ -11,12 +11,19 @@
            asp-action="Index">@UserManager.GetUserAsync(User).Result.Name</a>
         </li>
 
-        <li>
-            <form class="form-inline" asp-area="Admin" asp-controller="Dashboard" asp-action="Index" method="get">
-                <button type="submit" class="nav-link btn btn-link text-dark">Dashboard</button>
-            </form>
-        </li>
+        var user = await UserManager.GetUserAsync(User);
+        var claims = await UserManager.GetClaimsAsync(user);
+        var isAdmin = claims.Where(x => x.Type == "LinkManagement").Select(x => x.Value).FirstOrDefault();
 
+        if(isAdmin == "true")
+        {
+            <li>
+                <form class="form-inline" asp-area="Admin" asp-controller="Dashboard" asp-action="Index" method="get">
+                    <button type="submit" class="nav-link btn btn-link text-dark">Dashboard</button>
+                </form>
+            </li>
+        }
+        
         <li class="nav-item">
             <form class="form-inline" asp-area="" asp-controller="Account" asp-action="SignOut"
               asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">

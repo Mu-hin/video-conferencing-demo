@@ -50,7 +50,7 @@ namespace VideoConferencingDemo.Web.Controllers
 
                 if (result.Succeeded)
                 {
-                    await model.AddAdminClaimsAsync();
+                    //await model.AddAdminClaimsAsync();
                     //await model.AddUserClaimsAsync();
 
                     if (model.RequireConfirmedAccount())
@@ -77,8 +77,7 @@ namespace VideoConferencingDemo.Web.Controllers
         }
 
         [AllowAnonymous]
-        public async Task<IActionResult> SignIn(string? projectId, string? returnUrl = null,
-            string? userEmail = null)
+        public async Task<IActionResult> SignIn(string? returnUrl = null, string? userEmail = null)
         {
             var model = _scope.Resolve<SignInModel>();
 
