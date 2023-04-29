@@ -7,7 +7,7 @@
     @if (SignInManager.IsSignedIn(User))
     {
         <li class="nav-item">
-            <a class="nav-link text-dark" asp-area="Admin" asp-controller="Dashboard"
+            <a class="nav-link text-dark" asp-area="User" asp-controller="Home"
            asp-action="Index">@UserManager.GetUserAsync(User).Result.Name</a>
         </li>
 

@@ -1,5 +1,6 @@
 using Autofac;
 using Autofac.Extensions.DependencyInjection;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Serilog;
@@ -8,6 +9,7 @@ using System.Reflection;
 using VideoConferencingDemo.Infrastructure;
 using VideoConferencingDemo.Infrastructure.DbContexts;
 using VideoConferencingDemo.Infrastructure.Entities.Identity;
+using VideoConferencingDemo.Infrastructure.Securities;
 using VideoConferencingDemo.Infrastructure.Services.Identity;
 using VideoConferencingDemo.Web;
 
@@ -54,7 +56,7 @@ try
         options.LoginPath = new PathString("/Account/SignIn");
         options.AccessDeniedPath = new PathString("/Account/AccessDenied");
         options.LogoutPath = new PathString("/Account/Logout");
-        options.Cookie.Name = "KeyGeneratorPortal.Identity";
+        options.Cookie.Name = "VideoConferencingPortal.Identity";
         options.SlidingExpiration = true;
         options.ExpireTimeSpan = TimeSpan.FromMinutes(30.00);
     });
@@ -83,6 +85,18 @@ try
         //login setting
         options.SignIn.RequireConfirmedAccount = false;
     });
+
+    //policy based
+    builder.Services.AddAuthorization(options =>
+    {
+        options.AddPolicy("AdminPolicy", policy =>
+        {
+            policy.RequireAuthenticatedUser();
+            policy.Requirements.Add(new AdminPolicy());
+        });
+    });
+
+    builder.Services.AddSingleton<IAuthorizationHandler, AdminPolicyHandler>();
 
     builder.Services.AddControllersWithViews();
 

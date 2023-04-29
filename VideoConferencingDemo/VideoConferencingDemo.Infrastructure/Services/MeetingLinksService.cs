@@ -4,6 +4,8 @@ using VideoConferencingDemo.Infrastructure.Adapter;
 using VideoConferencingDemo.Infrastructure.Entities;
 using VideoConferencingDemo.Infrastructure.Exceptions;
 using VideoConferencingDemo.Infrastructure.UnitOfWorks;
+using MeetingLinkBO = VideoConferencingDemo.Infrastructure.BusinessObjects.MeetingLink;
+using MeetingLinkEO = VideoConferencingDemo.Infrastructure.Entities.MeetingLink;
 
 namespace VideoConferencingDemo.Infrastructure.Services;
 
@@ -64,5 +66,31 @@ public class MeetingLinksService : IMeetingLinksService
         {
             throw new InvalidLinkException("An user tried to connect with invalid meeting link");
         }
+    }
+
+    public async Task DeleteMeetingLink(Guid id)
+    {
+        await _applicationUnitOfWork.MeetingLinks.RemoveAsync(id);
+        await _applicationUnitOfWork.SaveAsync();
+    }
+
+    public (int total, int totalDisplay, IList<MeetingLinkBO> records) GetMeetingLinks(int pageIndex,
+            int pageSize, string searchText, string orderby)
+    {
+        if (orderby == String.Empty)
+            orderby = null;
+
+        var results = _applicationUnitOfWork.MeetingLinks.GetDynamic(
+                    x => x.UserEmail.Contains(searchText),
+                    orderby, "", pageIndex, pageSize, true);
+
+        IList<MeetingLinkBO> keyRequests = new List<MeetingLinkBO>();
+
+        foreach (MeetingLinkEO keyRequestEntity in results.data)
+        {
+            keyRequests.Add(_mapper.Map<MeetingLinkBO>(keyRequestEntity));
+        }
+
+        return (results.total, results.totalDisplay, keyRequests);
     }
 }

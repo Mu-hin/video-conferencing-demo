@@ -73,22 +73,19 @@ namespace VideoConferencingDemo.Web.Controllers
             return View(model);
         }
 
+        [AllowAnonymous]
         public IActionResult InvalidLink()
         {
             return View();
         }
 
-        //[HttpPost]
-        //public IActionResult StartMeeting(Guid id, bool microphone, bool camera)
-        //{
-        //    return View();
-        //}
-
+        [AllowAnonymous]
         public IActionResult Privacy()
         {
             return View();
         }
 
+        [AllowAnonymous]
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {
