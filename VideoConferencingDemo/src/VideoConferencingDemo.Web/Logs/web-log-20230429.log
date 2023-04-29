@@ -32,3 +32,11 @@ System.TypeLoadException: Could not load type 'AspNetCoreGeneratedDocument.Views
 2023-04-29 09:24:29.295 +06:00 [INF] Application Starting up
 2023-04-29 09:30:25.423 +06:00 [INF] Application Starting up
 2023-04-29 09:37:27.713 +06:00 [INF] Application Starting up
+2023-04-29 09:47:32.269 +06:00 [INF] Application Starting up
+2023-04-29 09:55:36.281 +06:00 [WRN] Unable to configure browser refresh script injection on the response. Consider manually adding '<script src="/_framework/aspnetcore-browser-refresh.js"></script>' to the body of the page.
+2023-04-29 09:58:11.267 +06:00 [INF] Application Starting up
+2023-04-29 16:50:39.906 +06:00 [INF] Application Starting up
+2023-04-29 17:21:41.874 +06:00 [INF] Application Starting up
+2023-04-29 17:53:17.485 +06:00 [INF] Application Starting up
+2023-04-29 18:10:58.629 +06:00 [INF] Application Starting up
+2023-04-29 23:30:51.853 +06:00 [INF] Application Starting up

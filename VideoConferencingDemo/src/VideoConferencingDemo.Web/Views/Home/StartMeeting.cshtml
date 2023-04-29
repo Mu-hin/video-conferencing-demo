@@ -9,6 +9,11 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
     <style>
+        .vertical-center {
+            margin: 0 50%;
+            width: 15rem;
+        }
+
         .align-footer {
             position: absolute;
             bottom: 0;
@@ -30,31 +35,48 @@
             width: 16rem;
             background: #3e3e3e;
             bottom: 77px;
-            left: 107px;
+            left: 0;
             position: absolute;
         }
     </style>
 }
 
 <div class="row justify-content-center">
-    <div id="live">
-        <video id="remote-video"></video>
-        <video id="local-video" autoplay="true" muted="muted"></video>
-        <button id="end-call" onclick="endCall()">End Call</button>
+    <div id="menu">
+        <div class="card" style="height: 22rem;width: 36rem;background: black;">
+            <video autoplay playsinline style="height: 18rem;width: 35rem;background: black;"></video>
+            <div class="align-footer">
+                <a href="#"><i class="camera fa-solid fa-video-slash fa-xl m-3"></i></a>
+                <a href="#"><i class="microphone fa-solid fa-microphone-slash fa-xl"></i></a>
+                <input type="hidden"/>
+                <p id="uuid"></p>
+            </div>
+        </div>
+        @if (Model.IsLinkOwner)
+        {
+            <button type="button" id="joinButton" onclick="callUser()" class=" btn btn-outline-primary mt-3 vertical-center">Join</button>
+        }
+        else
+        {
+            <button type="button" id="askTojoinButton" onclick="callUser()" class="btn btn-outline-primary mt-3 vertical-center">Ask to join</button>
+        }
     </div>
 
-    <video id="remote-video" class="card" style="height: 35rem;width: 72rem;background: black;"></video>
-    <div class="align-footer">
-        <video id="local-video" autoplay playsinline style="height: 12rem;width: 16rem;background: #3e3e3e;"></video>
-                
-        <div class="align-icon">
-            <a href="#"><i class="camera fa-solid fa-video-slash fa-xl m-3"></i></a>
-            <a href="#"><i class="microphone fa-solid fa-microphone-slash fa-xl"></i></a>
+    <div id="live">
+        <video id="remote-video" class="card" style="height: 35rem;width: 72rem;background: black;"></video>
+        <div class="align-footer">
+            <video id="local-video" autoplay playsinline style="height: 12rem;width: 16rem;background: #3e3e3e;"></video>
+            <div class="align-icon">
+                <a href="#"><i class="camera fa-solid fa-video-slash fa-xl m-3"></i></a>
+                <a href="#"><i class="microphone fa-solid fa-microphone-slash fa-xl"></i></a>
+            </div>
         </div>
     </div>
 </div>
 
 @section Scripts{
+    <script src="~/peerjs/peerjs-1.4.7.min.js"></script>
+
     <script>
         'use strict';
         let enableMicrophone = false;
@@ -127,7 +149,103 @@
         function InitializesMediaStream(){
             navigator.mediaDevices.getUserMedia(mediaStreamConstraints)
                 .then(gotLocalMediaStream).catch(handleLocalMediaStreamError);
-        } 
+        }
+
+        //------------------------------/
+        let linkOwner = '@Model.IsLinkOwner';
+        let Id = '@Model.MeetingId';
+        let peer;
+
+        if(linkOwner === 'False'){
+            peer = new Peer();           
+        }
+        else{
+            peer = new Peer(Id);
+        }
+        
+        var currentCall;
+        peer.on("open", function (id) {
+            console.log(`id: ${id}`);
+            console.log(`Id: ${Id}`);
+            document.getElementById("uuid").textContent = Id;
+        });
+
+        async function callUser() {
+            // get the id entered by the user
+            const peerId = document.getElementById("uuid").textContent;
+            // grab the camera and mic
+            const stream = await navigator.mediaDevices.getUserMedia({
+                video: true,
+                audio: true,
+            });
+            // switch to the video call and play the camera preview
+            document.getElementById("menu").style.display = "none";
+            document.getElementById("live").style.display = "block";
+            document.getElementById("local-video").srcObject = stream;
+            document.getElementById("local-video").play();
+            // make the call
+            const call = peer.call(peerId, stream);
+            call.on("stream", (stream) => {
+                document.getElementById("remote-video").srcObject = stream;
+                document.getElementById("remote-video").play();
+            });
+            call.on("data", (stream) => {
+                document.querySelector("#remote-video").srcObject = stream;
+            });
+            call.on("error", (err) => {
+                console.log(err);
+            });
+            call.on('close', () => {
+                endCall()
+            })
+            // save the close function
+            currentCall = call;
+        };
+
+        peer.on("call", (call) => {
+            if (confirm(`Accept call from ${call.peer}?`)) {
+                // grab the camera and mic
+                navigator.mediaDevices
+                    .getUserMedia({ video: true, audio: true })
+                    .then((stream) => {
+                        // play the local preview
+                        document.querySelector("#local-video").srcObject = stream;
+                        document.querySelector("#local-video").play();
+                        // answer the call
+                        call.answer(stream);
+                        // save the close function
+                        currentCall = call;
+                        // change to the video view
+                        document.querySelector("#menu").style.display = "none";
+                        document.querySelector("#live").style.display = "block";
+                        call.on("stream", (remoteStream) => {
+                            // when we receive the remote stream, play it
+                            document.getElementById("remote-video").srcObject = remoteStream;
+                            document.getElementById("remote-video").play();
+                        });
+                    })
+                    .catch((err) => {
+                        console.log("Failed to get local stream:", err);
+                    });
+            } else {
+                // user rejected the call, close it
+                call.close();
+            }
+        });
+
+        function endCall() {
+            // Go back to the menu
+            document.querySelector("#menu").style.display = "block";
+            document.querySelector("#live").style.display = "none";
+            // If there is no current call, return
+            if (!currentCall) return;
+            // Close the call, and reset the function
+            try {
+                currentCall.close();
+            } catch { }
+            currentCall = undefined;
+        }
+
     </script>
 }
 

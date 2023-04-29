@@ -50,6 +50,7 @@
         }
     </style>
 }
+
 <div class="row">
     <div class="col-md-6">
         <h1 class="display-3 mb-3">Free premium video meetings for everyone</h1>
@@ -110,7 +111,25 @@
 {
     <script src="~/peerjs/peerjs-1.4.7.min.js"></script>
     <script>
-        const peer = new Peer();
+        //const peer = new Peer({
+        //    debug: 3
+        //});
+
+        const peer = new Peer({
+            debug: 3,
+            config: {
+                iceServers: [
+                    { urls: "stun:stun3.l.google.com:19302" },
+                    {
+                        url: 'turn:numb.viagenie.ca',
+                        credential: 'muazkh',
+                        username: 'webrtc@live.com'
+                    }
+                ],
+            }
+        });
+
+        //const peer = new Peer();
         var currentCall;
         peer.on("open", function (id) {
             document.getElementById("uuid").textContent = id;

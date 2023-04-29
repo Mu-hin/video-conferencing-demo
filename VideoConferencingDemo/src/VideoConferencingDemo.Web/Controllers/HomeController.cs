@@ -39,22 +39,22 @@ namespace VideoConferencingDemo.Web.Controllers
                 var meetingId = await model.StoreNewMeetingInformationAsync(User);
 
 
-                var url = Url.Action(nameof(CheckMeetingLink), "Home",
+                var url = Url.Action(nameof(StartMeeting), "Home",
                             values: new { id = meetingId },
                             protocol: Request.Scheme)!;
 
                 return HtmlEncoder.Default.Encode(url);
             }
-            catch(MaxLimitException ex)
+            catch (MaxLimitException ex)
             {
                 _logger.LogInformation("An user tried to generate meeting link more than max limit");
                 //return HttpStatusCode.MethodNotAllowed.ToString();
                 return ex.Message;
             }
-            
+
         }
 
-        public async Task<IActionResult> CheckMeetingLink(Guid id)
+        public async Task<IActionResult> StartMeeting(Guid id)
         {
             var model = new StartMeetingModel();
             model.MeetingId = id;
@@ -64,7 +64,7 @@ namespace VideoConferencingDemo.Web.Controllers
                 model.ResolveDependency(_scope);
                 await model.CheckLinkOwner(id, User);
             }
-            catch(InvalidLinkException ex)
+            catch (InvalidLinkException ex)
             {
                 _logger.LogInformation(ex.Message);
                 return RedirectToAction(nameof(InvalidLink));
@@ -78,11 +78,11 @@ namespace VideoConferencingDemo.Web.Controllers
             return View();
         }
 
-        [HttpPost]
-        public IActionResult StartMeeting(Guid id, bool microphone, bool camera)
-        {
-            return View();
-        }
+        //[HttpPost]
+        //public IActionResult StartMeeting(Guid id, bool microphone, bool camera)
+        //{
+        //    return View();
+        //}
 
         public IActionResult Privacy()
         {
