@@ -33,41 +33,6 @@ namespace VideoConferencingDemo.Infrastructure.DbContexts
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            //    modelBuilder.Entity<SerialKey>().ToTable("KeyInformations");
-
-            //    modelBuilder.Entity<SerialKey>()
-            //        .Property(x => x.Id);
-            //    modelBuilder.Entity<SerialKey>()
-            //        .Property(x => x.Key).HasColumnType("varchar").IsRequired().HasMaxLength(80);
-            //    modelBuilder.Entity<SerialKey>()
-            //        .Property(x => x.ProcessorId).HasColumnType("varchar").IsRequired().HasMaxLength(20);
-            //    modelBuilder.Entity<SerialKey>()
-            //        .Property(x => x.HashValue).HasColumnType("varbinary").IsRequired().HasMaxLength(512);
-            //    modelBuilder.Entity<SerialKey>()
-            //        .Property(x => x.CompanyName).HasColumnType("varchar").IsRequired().HasMaxLength(256);
-            //    modelBuilder.Entity<SerialKey>()
-            //        .Property(x => x.ExpiryDateTime).HasColumnType("datetime2").IsRequired().HasMaxLength(7);
-            //    modelBuilder.Entity<SerialKey>()
-            //        .Property(x => x.EncryptedString).HasColumnType("varchar").IsRequired().HasMaxLength(1024);
-
-            //    //key request
-            //    modelBuilder.Entity<KeyRequest>().ToTable("KeyRequests");
-
-            //    modelBuilder.Entity<KeyRequest>()
-            //        .Property(x => x.Id);
-            //    modelBuilder.Entity<KeyRequest>()
-            //        .Property(x => x.CompanyName).HasColumnType("varchar").IsRequired().HasMaxLength(256);
-            //    modelBuilder.Entity<KeyRequest>()
-            //        .Property(x => x.ProcessorId).HasColumnType("varchar").IsRequired().HasMaxLength(20);
-            //    modelBuilder.Entity<KeyRequest>()
-            //        .Property(x => x.Status).HasColumnType("varchar").IsRequired().HasMaxLength(20);
-            //    modelBuilder.Entity<KeyRequest>()
-            //        .Property(x => x.ExpiryDateTime).HasColumnType("datetime2").IsRequired().HasMaxLength(7);
-            //    modelBuilder.Entity<KeyRequest>()
-            //        .Property(x => x.UserName).HasColumnType("varchar").IsRequired().HasMaxLength(100);
-            //    modelBuilder.Entity<KeyRequest>()
-            //        .Property(x => x.Email).HasColumnType("varchar").IsRequired().HasMaxLength(50);
-
             //seed
             modelBuilder.Entity<ApplicationUserClaim>().HasData(new AdminPolicySeed().AdminClaims);
             modelBuilder.Entity<ApplicationUser>().HasData(new AdminSeed().Admin);
@@ -76,6 +41,5 @@ namespace VideoConferencingDemo.Infrastructure.DbContexts
         }
 
         public DbSet<MeetingLink> MeetingLinks { get; set; }
-        //public DbSet<KeyRequest> KeyRequests { get; set; }
     }
 }
