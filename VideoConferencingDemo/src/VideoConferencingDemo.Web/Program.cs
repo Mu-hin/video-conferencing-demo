@@ -100,6 +100,8 @@ try
 
     builder.Services.AddControllersWithViews();
 
+    //builder.WebHost.UseUrls("http://*:80");
+
     var app = builder.Build();
     Log.Information("Application Starting up");
 
