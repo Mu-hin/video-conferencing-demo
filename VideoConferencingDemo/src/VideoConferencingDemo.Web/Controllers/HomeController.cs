@@ -62,7 +62,7 @@ namespace VideoConferencingDemo.Web.Controllers
             try
             {
                 model.ResolveDependency(_scope);
-                await model.CheckLinkOwner(id, User);
+                await model.CheckLinkOwnerAsync(id, User);
             }
             catch (InvalidLinkException ex)
             {

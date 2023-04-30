@@ -107,9 +107,19 @@ namespace VideoConferencingDemo.Infrastructure.Adapter
             return userBO;
         }
 
-        public async Task UpdateTotalLinkInfo(ClaimsPrincipal claimsPrincipal)
+        public async Task IncreaseTotalLinkInfoAsync(ClaimsPrincipal claimsPrincipal)
         {
             var userEO = await GetUserByClaimPrincipalAsync(claimsPrincipal);
+
+            userEO.TotalGeneratedLinq += 1;
+
+            await _userManager.UpdateAsync(userEO);
+        }
+
+        public async Task DecreaseTotalLinkInfoAsync(string email)
+        {
+            var userEO = await FindUserByEmailAsync(email);
+
             userEO.TotalGeneratedLinq += 1;
 
             await _userManager.UpdateAsync(userEO);

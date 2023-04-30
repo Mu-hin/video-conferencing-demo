@@ -51,9 +51,9 @@ namespace VideoConferencingDemo.Web.Areas.Admin.Models
             };
         }
 
-        public async Task DeleteMeetingLink(Guid id)
+        public async Task DeleteMeetingLinkAsync(Guid id)
         {
-            await _meetingLinksService.DeleteMeetingLink(id);
+            await _meetingLinksService.DeleteMeetingLinkAsync(id);
         }
     }
 }

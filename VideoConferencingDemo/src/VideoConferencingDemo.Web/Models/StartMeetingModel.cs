@@ -28,9 +28,9 @@ namespace VideoConferencingDemo.Web.Models
             _meetingLinksService = _scope.Resolve<IMeetingLinksService>();
         }
 
-        public async Task CheckLinkOwner(Guid meetingId, ClaimsPrincipal claimsPrincipal)
+        public async Task CheckLinkOwnerAsync(Guid meetingId, ClaimsPrincipal claimsPrincipal)
         {
-            IsLinkOwner = await _meetingLinksService.CheckLinkOwner(meetingId, claimsPrincipal);
+            IsLinkOwner = await _meetingLinksService.CheckLinkOwnerAsync(meetingId, claimsPrincipal);
         }
     }
 }

@@ -41,11 +41,11 @@ public class MeetingLinksService : IMeetingLinksService
             throw new MaxLimitException("You had reached the max limit of link generation");
         }
 
-        await _userManager.UpdateTotalLinkInfo(claimsPrincipal);
+        await _userManager.IncreaseTotalLinkInfoAsync(claimsPrincipal);
         return meetingLink.MeetingId;
     }
 
-    public async Task<bool> CheckLinkOwner(Guid meetingId, ClaimsPrincipal claimsPrincipal)
+    public async Task<bool> CheckLinkOwnerAsync(Guid meetingId, ClaimsPrincipal claimsPrincipal)
     {
         var currentUser = await _userManager.GetUserAsync(claimsPrincipal);
         var meetingLinkInfo = _applicationUnitOfWork.MeetingLinks.Get(x => x.MeetingId == meetingId, "").FirstOrDefault();
@@ -68,11 +68,21 @@ public class MeetingLinksService : IMeetingLinksService
         }
     }
 
-    public async Task DeleteMeetingLink(Guid id)
+    public async Task DeleteMeetingLinkAsync(Guid id)
     {
-        await _applicationUnitOfWork.MeetingLinks.RemoveAsync(id);
-        //decrese generated meeting link count from user table
-        await _applicationUnitOfWork.SaveAsync();
+        var meetingLinkInfoEO = await _applicationUnitOfWork.MeetingLinks.GetByIdAsync(id);
+
+        if(meetingLinkInfoEO != null)
+        {
+            await _applicationUnitOfWork.MeetingLinks.RemoveAsync(id);
+            await _userManager.DecreaseTotalLinkInfoAsync(meetingLinkInfoEO.UserEmail);
+
+            await _applicationUnitOfWork.SaveAsync();
+        }
+        else
+        {
+            throw new InvalidOperationException($"The link with the specified id:{id} was not found");
+        }
     }
 
     public (int total, int totalDisplay, IList<MeetingLinkBO> records) GetMeetingLinks(int pageIndex,

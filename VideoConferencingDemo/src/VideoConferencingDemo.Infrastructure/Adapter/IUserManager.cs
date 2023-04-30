@@ -22,6 +22,7 @@ namespace VideoConferencingDemo.Infrastructure.Adapter
         public Task<Guid> GetUserIdAsync(ClaimsPrincipal claimsPrincipal);
         public Task<bool> CheckCurrentUserAsync(ClaimsPrincipal claimsPrincipal, string email);
         public Task AddToRolesAsync(string email, IList<string> claims);
-        public Task UpdateTotalLinkInfo(ClaimsPrincipal claimsPrincipal);
+        public Task IncreaseTotalLinkInfoAsync(ClaimsPrincipal claimsPrincipal);
+        public Task DecreaseTotalLinkInfoAsync(string email);
     }
 }

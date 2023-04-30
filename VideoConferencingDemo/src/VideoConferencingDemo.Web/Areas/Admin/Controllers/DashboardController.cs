@@ -40,7 +40,7 @@ namespace VideoConferencingDemo.Web.Areas.Admin.Controllers
                 var model = new MeetingLinkListModel();
                 model.ResolveDependency(_scope);
 
-                await model.DeleteMeetingLink(id);
+                await model.DeleteMeetingLinkAsync(id);
             }
             catch (Exception ex)
             {
