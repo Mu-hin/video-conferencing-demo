@@ -133,6 +133,7 @@
             // switch to the video call and play the camera preview
             document.getElementById("menu").style.display = "none";
             document.getElementById("live").style.display = "block";
+            document.querySelector('footer').style.display = "none";
             document.getElementById("local-video").srcObject = stream;
             document.getElementById("local-video").play();
             // make the call
@@ -170,6 +171,8 @@
                         // change to the video view
                         document.querySelector("#menu").style.display = "none";
                         document.querySelector("#live").style.display = "block";
+                        document.querySelector('footer').style.display = "none";
+
                         call.on("stream", (remoteStream) => {
                             // when we receive the remote stream, play it
                             document.getElementById("remote-video").srcObject = remoteStream;
@@ -189,6 +192,8 @@
             // Go back to the menu
             document.querySelector("#menu").style.display = "block";
             document.querySelector("#live").style.display = "none";
+            document.querySelector('footer').style.display = "block";
+
             // If there is no current call, return
             if (!currentCall) return;
             // Close the call, and reset the function
@@ -200,15 +205,9 @@
 
         //----------------------------//
         var myModal = new bootstrap.Modal(document.getElementById('exampleModalToggle'));
-        //var myButton = document.getElementById("myButton");
         let modalText = document.querySelector(".modal-body");
         let createMeetingButton = document.getElementById("createMeeting");
         let joinButton = document.getElementById("joinButton");
-        
-
-
-
-        //window.location.href = "http://www.w3schools.com";
 
         joinButton.onclick = function () {
             let joinLink = document.getElementById("joinLink").value;
@@ -228,12 +227,9 @@
 
                 xhr.onload = function () {
                     if (xhr.status === 200) {
-                        //const data = JSON.parse(xhr.responseText);
                         modalText.textContent = xhr.responseText;
                         console.log(xhr.responseText);
-                        //badge.innerText = data;
                     } else {
-                        //modalText.textContent = JSON.parse(xhr.responseText);
                         console.log(xhr.responseText);
                         console.log('Request failed. Status code:', xhr.status);
                     }
@@ -243,7 +239,5 @@
                 myModal.show();
             }
         }
-
-        
     </script>
 }
