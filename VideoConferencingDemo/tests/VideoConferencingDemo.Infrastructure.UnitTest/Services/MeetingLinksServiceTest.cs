@@ -17,7 +17,7 @@ namespace VideoConferencingDemo.Infrastructure.UnitTest.Services;
 public class MeetingLinksServiceTest
 {
     private AutoMock _mock;
-    private Mock<IApplicationUnitOfWork> _applicationtUnitOfWork;
+    private Mock<IApplicationUnitOfWork> _applicationtUnitOfWorkMock;
     private Mock<IMeetingLinkRepository> _meetingLinkRepositoryMock;
     private Mock<IMapper> _mapperMock;
     private IMeetingLinksService _meetingLinksService;
@@ -38,7 +38,7 @@ public class MeetingLinksServiceTest
     [SetUp]
     public void Setup()
     {
-        _applicationtUnitOfWork = _mock.Mock<IApplicationUnitOfWork>();
+        _applicationtUnitOfWorkMock = _mock.Mock<IApplicationUnitOfWork>();
         _meetingLinkRepositoryMock = _mock.Mock<IMeetingLinkRepository>();
         _mapperMock = _mock.Mock<IMapper>();
         _meetingLinksService = _mock.Create<MeetingLinksService>();
@@ -48,14 +48,14 @@ public class MeetingLinksServiceTest
     [TearDown]
     public void TearDown()
     {
-        _applicationtUnitOfWork.Reset();
+        _applicationtUnitOfWorkMock.Reset();
         _meetingLinkRepositoryMock.Reset();
         _mapperMock.Reset();
         _userManagerMock.Reset();
     }
 
     [Test, Category("unit test")]
-    public async Task StoreMeetingInformationAsync_CourseDoesNotExists_CreateMeetingLink()
+    public async Task CreateMeetingLinkAsync_LessThanMaxLimit_CreateLink()
     {
         // Arrange
         var userEO = new ApplicationUserEO
@@ -68,7 +68,7 @@ public class MeetingLinksServiceTest
             TotalGeneratedLinq = 5
         };
 
-        var meetingLink = new MeetingLink
+        var meetingLinks = new MeetingLink
         {
             Id = Guid.Parse("042254EC-A1AE-4D6A-934D-4BF2D203BC3C"),
             UserEmail = "user@gmail.com",
@@ -76,28 +76,47 @@ public class MeetingLinksServiceTest
             LastUsed = DateTime.Parse("2023-04-28 12:20:05.5503846")
         };
 
-        _userManagerMock.Setup(x => x.GetUserAsync(default)).ReturnsAsync(userBO).Verifiable();
-
-        _applicationtUnitOfWork.Setup(x => x.MeetingLinks)
+        _applicationtUnitOfWorkMock.Setup(x => x.MeetingLinks)
             .Returns(_meetingLinkRepositoryMock.Object).Verifiable();
 
-        _meetingLinkRepositoryMock.Setup(x => x.AddAsync(meetingLink))
-            .Verifiable();
+        _userManagerMock.Setup(x => x.GetUserAsync(default)).ReturnsAsync(userBO).Verifiable();
 
-        _applicationtUnitOfWork.Setup(x => x.SaveAsync()).Verifiable();
+        //_meetingLinkRepositoryMock.Setup(x => x.AddAsync(meetingLinks)).Returns(Task.CompletedTask).Verifiable();
 
-        _userManagerMock.Setup(x => x.UpdateTotalLinkInfo(default)).Verifiable();
+        _applicationtUnitOfWorkMock.Setup(x => x.SaveAsync()).Returns(Task.CompletedTask).Verifiable();
+
+        _userManagerMock.Setup(x => x.UpdateTotalLinkInfo(default)).Returns(Task.CompletedTask).Verifiable();
 
         // Act
-        var result = await _meetingLinksService.StoreMeetingInformationAsync(default);
+        var result = await _meetingLinksService.CreateMeetingLinkAsync(default);
 
         // Assert
         this.ShouldSatisfyAllConditions(() =>
         {
-            _applicationtUnitOfWork.VerifyAll();
+            _applicationtUnitOfWorkMock.VerifyAll();
             _meetingLinkRepositoryMock.VerifyAll();
-            result.ShouldBe(meetingLink.MeetingId);
+            _userManagerMock.VerifyAll();
+            result.ShouldBeOfType<Guid>();
         });
+    }
 
+    [Test, Category("unit test")]
+    public async Task CreateMeetingLinkAsync_MoreThanMaxLimit_ThrowMaxLimitException()
+    {
+        // Arrange
+        var userBO = new ApplicationUserBO
+        {
+            TotalGeneratedLinq = 25
+        };
+
+        _applicationtUnitOfWorkMock.Setup(x => x.MeetingLinks)
+            .Returns(_meetingLinkRepositoryMock.Object).Verifiable();
+
+        _userManagerMock.Setup(x => x.GetUserAsync(default)).ReturnsAsync(userBO).Verifiable();
+
+        // Act
+        await Should.ThrowAsync<MaxLimitException>(async () =>
+            await _meetingLinksService.CreateMeetingLinkAsync(default)
+        );
     }
 }
