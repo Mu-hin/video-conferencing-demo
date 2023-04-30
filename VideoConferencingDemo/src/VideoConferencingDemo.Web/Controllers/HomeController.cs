@@ -36,7 +36,7 @@ namespace VideoConferencingDemo.Web.Controllers
             {
                 var model = new HomePageModel();
                 model.ResolveDependency(_scope);
-                var meetingId = await model.StoreNewMeetingInformationAsync(User);
+                var meetingId = await model.CreateMeetingLinkAsync(User);
 
 
                 var url = Url.Action(nameof(StartMeeting), "Home",

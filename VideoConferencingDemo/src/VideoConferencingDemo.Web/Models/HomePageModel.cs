@@ -36,9 +36,9 @@ namespace VideoConferencingDemo.Web.Models
             return _signInManager.IsSignedIn(claimsPrincipal);
         }
 
-        public async Task<Guid> StoreNewMeetingInformationAsync(ClaimsPrincipal claimsPrincipal)
+        public async Task<Guid> CreateMeetingLinkAsync(ClaimsPrincipal claimsPrincipal)
         {
-            return await _meetingLinksService.StoreMeetingInformationAsync(claimsPrincipal);
+            return await _meetingLinksService.CreateMeetingLinkAsync(claimsPrincipal);
         }
     }
 }

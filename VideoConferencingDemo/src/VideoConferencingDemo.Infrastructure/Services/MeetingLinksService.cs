@@ -22,7 +22,7 @@ public class MeetingLinksService : IMeetingLinksService
         _mapper = mapper;
     }
 
-    public async Task<Guid> StoreMeetingInformationAsync(ClaimsPrincipal claimsPrincipal)
+    public async Task<Guid> CreateMeetingLinkAsync(ClaimsPrincipal claimsPrincipal)
     {
         var currentUser = await _userManager.GetUserAsync(claimsPrincipal);
         var meetingLink = new MeetingLink();
@@ -71,6 +71,7 @@ public class MeetingLinksService : IMeetingLinksService
     public async Task DeleteMeetingLink(Guid id)
     {
         await _applicationUnitOfWork.MeetingLinks.RemoveAsync(id);
+        //decrese generated meeting link count from user table
         await _applicationUnitOfWork.SaveAsync();
     }
 
