@@ -10,7 +10,6 @@ using VideoConferencingDemo.Infrastructure.UnitOfWorks;
 using ApplicationUserEO = VideoConferencingDemo.Infrastructure.Entities.Identity.ApplicationUser;
 using ApplicationUserBO = VideoConferencingDemo.Infrastructure.BusinessObjects.ApplicationUser;
 using VideoConferencingDemo.Infrastructure.Entities;
-using Microsoft.AspNetCore.Http;
 using System.Linq.Expressions;
 
 namespace VideoConferencingDemo.Infrastructure.UnitTest.Services;
@@ -131,7 +130,6 @@ public class MeetingLinksServiceTest
             Email = "user@gmail.com"
         };
 
-
         var meetingLinks = new List<MeetingLink>()
         {
             new MeetingLink
@@ -234,6 +232,24 @@ public class MeetingLinksServiceTest
         // Act
         await Should.ThrowAsync<InvalidLinkException>(async () =>
             await _meetingLinksService.CheckLinkOwnerAsync(meetingId, default)
+        );
+    }
+
+    [Test, Category("unit test")]
+    public async Task DeleteMeetingLinkAsync_InValidId_Throw_InvalidOperationException()
+    {
+        MeetingLink? meetingLink = null;
+        var meetingId = Guid.Parse("042254EC-0000-0000-934D-4BF2D203BC3C");
+
+        _applicationtUnitOfWorkMock.Setup(x => x.MeetingLinks)
+            .Returns(_meetingLinkRepositoryMock.Object).Verifiable();
+
+        _meetingLinkRepositoryMock.Setup(x => x.GetByIdAsync(meetingId
+            )).ReturnsAsync(meetingLink).Verifiable();
+
+        // Act
+        await Should.ThrowAsync<InvalidOperationException>(async () =>
+            await _meetingLinksService.DeleteMeetingLinkAsync(meetingId)
         );
     }
 }

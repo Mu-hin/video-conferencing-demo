@@ -120,7 +120,7 @@ namespace VideoConferencingDemo.Infrastructure.Adapter
         {
             var userEO = await FindUserByEmailAsync(email);
 
-            userEO.TotalGeneratedLinq += 1;
+            userEO.TotalGeneratedLinq -= 1;
 
             await _userManager.UpdateAsync(userEO);
         }
