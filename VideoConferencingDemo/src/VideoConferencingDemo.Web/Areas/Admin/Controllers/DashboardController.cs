@@ -50,6 +50,5 @@ namespace VideoConferencingDemo.Web.Areas.Admin.Controllers
 
             return RedirectToAction(nameof(Index));
         }
-
     }
 }

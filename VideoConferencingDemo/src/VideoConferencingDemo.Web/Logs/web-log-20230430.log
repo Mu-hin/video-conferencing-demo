@@ -140,3 +140,5 @@ System.InvalidOperationException: The view 'AccessDenied' was not found. The fol
 2023-04-30 23:11:47.927 +06:00 [INF] Application Starting up
 2023-04-30 23:34:12.996 +06:00 [INF] Application Starting up
 2023-04-30 23:35:09.167 +06:00 [INF] Application Starting up
+2023-04-30 23:54:11.100 +06:00 [INF] Application Starting up
+2023-04-30 23:55:19.100 +06:00 [INF] An user tried to connect with invalid meeting link
