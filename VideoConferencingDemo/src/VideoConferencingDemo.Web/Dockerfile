@@ -5,7 +5,7 @@ COPY ["VideoConferencingDemo.Web/*.csproj", "VideoConferencingDemo.Web/"]
 COPY ["VideoConferencingDemo.Infrastructure/*.csproj", "VideoConferencingDemo.Infrastructure/"]
 RUN dotnet restore "VideoConferencingDemo.Web/VideoConferencingDemo.Web.csproj"
 COPY . .
-WORKDIR "src/VideoConferencingDemo.Web"
+WORKDIR "/src/VideoConferencingDemo.Web"
 RUN dotnet build "VideoConferencingDemo.Web.csproj" -c Release -o /app
 
 FROM build AS publish
